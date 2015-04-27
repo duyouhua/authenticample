@@ -57,19 +57,23 @@ bool get_url(const char *url, const char *cert_file, const char *key_file, const
 
     // SSL options
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 1L); // Always check host name of remote server (compare it with CN in the server's certificate)
-    if (NULL != cert_file && NULL != key_file)
+    // Set client's certificate and private key file names and their format
+    if (NULL != cert_file)
     {
-        // Set client's certificate and private key file names and their format
         curl_easy_setopt(curl, CURLOPT_SSLCERTTYPE, "PEM");
         curl_easy_setopt(curl, CURLOPT_SSLCERT, cert_file);
-        curl_easy_setopt(curl, CURLOPT_SSLCERT, key_file);
     }
+    if (NULL != key_file)
+    {
+        curl_easy_setopt(curl, CURLOPT_SSLKEYTYPE, "PEM");
+        curl_easy_setopt(curl, CURLOPT_SSLKEY, key_file);
+    }
+    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
     if (NULL != cacerts_file)
     {
         // Use specified CA certs file
         curl_easy_setopt(curl, CURLOPT_CAINFO, cacerts_file);
         // Explicitly set peer verification
-        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
     }
 
     CURLcode result;
