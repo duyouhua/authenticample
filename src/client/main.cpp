@@ -39,7 +39,7 @@ static size_t CURL_WriteFunctionCallback(void *contents, size_t size, size_t nme
     return realsize;
 }
 
-bool get_url(const char *url, const char *cert_file, const char *key_file, const char *cacerts_file)
+bool get_url(const char *url, const char *cert_file, const char *key_file, const char *cacerts_file, bool verify_peer, bool verify_host)
 {
     CURL *curl;
     curl = curl_easy_init();
@@ -56,7 +56,7 @@ bool get_url(const char *url, const char *cert_file, const char *key_file, const
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *) &chunk);
 
     // SSL options
-    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 1L); // Always check host name of remote server (compare it with CN in the server's certificate)
+    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, verify_host ? 2L : 0L);
     // Set client's certificate and private key file names and their format
     if (NULL != cert_file)
     {
@@ -68,7 +68,7 @@ bool get_url(const char *url, const char *cert_file, const char *key_file, const
         curl_easy_setopt(curl, CURLOPT_SSLKEYTYPE, "PEM");
         curl_easy_setopt(curl, CURLOPT_SSLKEY, key_file);
     }
-    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
+    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, static_cast<long>(verify_peer));
     if (NULL != cacerts_file)
     {
         // Use specified CA certs file
@@ -100,9 +100,11 @@ int main(int argc, char *argv[])
     const char *cert_file = NULL;
     const char *key_file = NULL;
     const char *cacerts_file = NULL;
+    bool verify_peer = false;
+    bool verify_host = false;
 
     int opt;
-    while (-1 != (opt = getopt(argc, argv, "u:c:k:r:")))
+    while (-1 != (opt = getopt(argc, argv, "u:c:k:r:vh")))
     {
         switch (opt)
         {
@@ -122,9 +124,17 @@ int main(int argc, char *argv[])
                 cacerts_file = optarg;
                 break;
 
+            case 'v':
+                verify_peer = true;
+                break;
+
+            case 'h':
+                verify_host = true;
+                break;
+
             default:
                 ACE_DEBUG((LM_ERROR, "Undefined command line option has been used.\n"
-                            "Usage: %s [-u <URL>] [-c <client's cert file> -k <client's private key file>] [-r <CA certs file>]\n",
+                            "Usage: %s [-u <URL>] [-c <client's cert file> -k <client's private key file>] [-r <CA certs file>] [-v]\n",
                             argv[0]));
                 return -2;
         }
@@ -132,7 +142,7 @@ int main(int argc, char *argv[])
 
     ACE_DEBUG((LM_INFO, "Client starting...\n"));
 
-    if (!get_url(url, cert_file, key_file, cacerts_file))
+    if (!get_url(url, cert_file, key_file, cacerts_file, verify_peer, verify_host))
     {
         ACE_DEBUG((LM_ERROR, "Error while retrieving URL. Exiting...\n"));
     }
