@@ -1,7 +1,7 @@
 # Authenticample
-## Build instructions:
-
 [![Join the chat at https://gitter.im/kvirund/authenticample](https://badges.gitter.im/kvirund/authenticample.svg)](https://gitter.im/kvirund/authenticample?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/kvirund/authenticample.svg?branch=master)](https://travis-ci.org/kvirund/authenticample)
+## Build instructions:
 
     $ git submodule init
     $ git submodule update
@@ -25,5 +25,3 @@ For example:
 ## Running client:
 
     $ client [-u <URL>] [-c <client's cert file> -k <client's private key file>] [-r <CA certs file>]
-
-[![Build Status](https://travis-ci.org/kvirund/authenticample.svg?branch=master)](https://travis-ci.org/kvirund/authenticample)
