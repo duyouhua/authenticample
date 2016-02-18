@@ -3,7 +3,6 @@
  * \author Anton Gorev aka Veei
  * \date 2015/08/18
  */
-#include <ace/OS.h>
 #include <ace/Log_Msg.h>
 
 #include <mongoose.h>
