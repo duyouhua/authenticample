@@ -9,7 +9,7 @@ before_script:
   - git submodule update
   - mkdir ${TRAVIS_BUILD_DIR}/build
   - cd ${TRAVIS_BUILD_DIR}/build
-  - cmake .
+  - cmake ..
 
 before_install:
   - sudo apt-get update -qq
