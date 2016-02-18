@@ -1,0 +1,18 @@
+language: cpp
+
+compiler:  
+  - gcc
+  - clang
+
+before_script:
+  - git submodule init
+  - git submodule update
+  - mkdir ${TRAVIS_BUILD_DIR}/build
+  - cd ${TRAVIS_BUILD_DIR}/build
+  - cmake .
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq libace-dev libcurl4-openssl-dev
+
+script: cmake --build .
