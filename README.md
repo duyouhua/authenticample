@@ -1,6 +1,8 @@
 # Authenticample
 ## Build instructions:
 
+[![Join the chat at https://gitter.im/kvirund/authenticample](https://badges.gitter.im/kvirund/authenticample.svg)](https://gitter.im/kvirund/authenticample?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
     $ git submodule init
     $ git submodule update
     $ mkdir build
