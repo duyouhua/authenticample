@@ -1,4 +1,5 @@
-1. Build instructions:
+# Authenticample
+## Build instructions:
 
     $ git submodule init
     $ git submodule update
@@ -7,7 +8,7 @@
     $ cmake ..
     $ make
 
-2. Running server:
+## Running server:
 
     $ src/server/server <port>
 
@@ -19,7 +20,7 @@ For example:
 
     $ server ssl://127.0.0.1:8043:server.pem:cacert.pem
 
-3. Running client:
+## Running client:
 
     $ client [-u <URL>] [-c <client's cert file> -k <client's private key file>] [-r <CA certs file>]
 
