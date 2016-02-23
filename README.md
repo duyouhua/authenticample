@@ -16,7 +16,7 @@
 
 To use with SSL support, use the following format of the port number:
 
-[ssl://][host:]port[:server certificate with private key file in PEM format[:CA certificate]]
+    [ssl://][host:]port[:server certificate with private key file in PEM format[:CA certificate]]
 
 For example:
 
